@@ -11,4 +11,8 @@ router
   .route("/:id")
   .delete(booksController.remove);
 
+router
+  .route("/search/:title")
+  .get(booksController.findByTitle);
+
 module.exports = router;

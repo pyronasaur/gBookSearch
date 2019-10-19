@@ -2,3 +2,8 @@
   float: right;
   color: #e74944;
 }
+
+.img-holder {
+  max-width: 200px;
+  /* max-height: 100px; */
+}

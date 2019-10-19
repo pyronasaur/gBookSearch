@@ -5,7 +5,6 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
 
 class Books extends Component {
   state = {
@@ -35,28 +34,6 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        description: this.state.description,
-        image: this.state.image,
-        link: this.state.link
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
-
   render() {
     return (
       <Container fluid>
@@ -69,12 +46,20 @@ class Books extends Component {
                     <List>
                     {this.state.books.map(book => (
                         <ListItem key={book._id}>
-                        <Link to={"/books/" + book._id}>
-                            <strong>
-                            {book.title} by {book.author}
-                            </strong>
-                        </Link>
-                        <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                          <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                          <div className="containerOfThings align-items-center d-inline-flex">
+                            <div className="card img-holder d-inline-flex p-2 w-25 h-100 img-thumbnail">
+                              <img src={book.image} className="img-fluid d-inline-block"/>
+                            </div>
+                            <div className="ml-3">
+                              <a href={book.link}>
+                                <strong>
+                                {book.title} by {book.author}
+                                </strong>
+                              </a>
+                            </div>
+                          </div>
+                          <p className="mt-2">{book.description}</p>
                         </ListItem>
                     ))}
                     </List>
